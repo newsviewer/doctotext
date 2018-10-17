@@ -49,6 +49,11 @@
 #include <vector>
 #include <zlib.h>
 
+static double fabs(double x)
+{
+    return x >= 0 ? x : -x;
+}
+
 //some functions specific for this parser
 
 //converts hex char (2 bytes) to single char. Examples:
@@ -6271,7 +6276,7 @@ struct PDFParser::Implementation
 
 				bool operator < (const TextElement& compared) const
 				{
-					if (abs(m_y - compared.m_y) > 4.0)	//tolerace
+					if (fabs(m_y - compared.m_y) > 4.0)	//tolerace
 					{
 						return m_y > compared.m_y;
 					}
@@ -6280,7 +6285,7 @@ struct PDFParser::Implementation
 
 				bool operator > (const TextElement& compared) const
 				{
-					if (abs(m_y - compared.m_y) > 4.0) //tolerace
+					if (fabs(m_y - compared.m_y) > 4.0) //tolerace
 					{
 						return m_y < compared.m_y;
 					}
@@ -6485,8 +6490,8 @@ struct PDFParser::Implementation
 							}
 							if (last)
 								str_width = x0 > x1 ? x0 - x_pos : x1 - x_pos;
-							if (abs(y1 - y0) > str_height)
-								str_height = abs(y1 - y0);
+							if (fabs(y1 - y0) > str_height)
+								str_height = fabs(y1 - y0);
 							if (y_pos > y1)
 								y_pos = y1;
 							if (y_pos > y0)
@@ -6495,7 +6500,7 @@ struct PDFParser::Implementation
 							m_current_state.m_line_matrix[0] += advance;
 							if (output.length() > 0 && output[output.length() - 1] == ' ')
 							{
-								space_size = abs(x0 - x1) > 1.0 ? abs(x0 - x1) : 1.0;
+								space_size = fabs(x0 - x1) > 1.0 ? fabs(x0 - x1) : 1.0;
 								m_current_state.m_line_matrix[0] += word_space;
 							}
 							add_charspace = true;
