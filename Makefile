@@ -125,6 +125,7 @@ endif
 	cp $(foreach f,plain_text_extractor formatting_style metadata doctotext_c_api link exception attachment variant,src/${f}.h) build/
 	mkdir build/doc
 	mkdir build/resources
+	cp ./3rdparty/resources/*  build/resources
 #	cp ./3rdparty/ac16/CMap/*  build/resources
 #	cp ./3rdparty/ag15/CMap/*  build/resources
 #	cp ./3rdparty/aj16/CMap/*  build/resources

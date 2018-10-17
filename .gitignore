@@ -1,0 +1,11 @@
+#build results
+[Bb]uild
+
+#3rdparty downloads
+3rdparty/
+
+#compiled files
+*.o
+*.so*
+*.exe
+*.dll
