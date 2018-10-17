@@ -83,7 +83,7 @@ struct CurrentHeaderFooter
 	bool in_footer;
 	UString header;
 	UString footer;
-	CurrentHeaderFooter() : in_header(false), in_footer(false) {};
+    CurrentHeaderFooter() : in_header(false), in_footer(false) {}
 };
 
 // constants are from MS Word Binary File Format Specification
@@ -112,7 +112,7 @@ struct CurrentState
 	FieldPart field_part;
 	UString field_params;
 	UString field_value;
-	CurrentState() : field_type(FLT_NONE), field_part(FIELD_PART_NONE) {};
+    CurrentState() : field_type(FLT_NONE), field_part(FIELD_PART_NONE) {}
 };
 
 struct Comment
@@ -493,7 +493,7 @@ class DocToTextTextHandler : public TextHandler
 						UString hyperlink_url;
 						for (i = 1; i < params.length() && params[i] != '"'; i++)
 							hyperlink_url += UString(params[i]);
-						res_text = UString(formatUrl(ustring_to_string(hyperlink_url), ustring_to_string(m_curr_state->field_value), m_formatting).c_str());
+                        res_text = formatUrl_U(hyperlink_url, m_curr_state->field_value, m_formatting);
 					}
 					else
 						res_text = params + UString(" ") + m_curr_state->field_value;
@@ -606,7 +606,7 @@ struct DOCParser::Implementation
 	{
 		if (m_verbose_logging)
 		{
-			if (m_log_stream != std::cerr)
+			if (m_log_stream != &std::cerr)
 				m_cerr_buf_backup = std::cerr.rdbuf(m_log_stream->rdbuf());
 		}
 		else
@@ -617,7 +617,7 @@ struct DOCParser::Implementation
 	{
 		if (m_verbose_logging)
 		{
-			if (m_log_stream != std::cerr)
+			if (m_log_stream != &std::cerr)
 				std::cerr.rdbuf(m_cerr_buf_backup);
 		}
 		else

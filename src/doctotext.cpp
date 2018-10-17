@@ -81,6 +81,11 @@ static void help()
 		"\t%%f in the command is substituted with name of file to extract\n"
 		"\tExample: --unzip-cmd=\"unzip -d %%d %%a %%f\"\n"
 	);
+    printf("url-style=[URL_STYLE]\tshow hyperlinks with specified style:\n"
+        "\ttext-only\t - show as hyperlink text only (default)\n"
+        "\textended\t - show hyperlink URL and text\n"
+        "\tunderscored\t - show hyperlink text with underscores instead of spaces\n"
+           );
 	printf("--verbose\tturn on verbose logging\n");
 	printf("--log-file=[PATH]\twrite logs to specified file.\n");
 }
@@ -108,7 +113,7 @@ int main(int argc, char* argv[])
 	FormattingStyle options;
 	options.table_style = TABLE_STYLE_TABLE_LOOK;
 	options.list_style.setPrefix(" * ");
-	options.url_style = URL_STYLE_UNDERSCORED;
+    options.url_style = URL_STYLE_TEXT_ONLY;
 
 	bool verbose = false;
 	ofstream* log_stream = NULL;

@@ -20,6 +20,7 @@ typedef std::vector<std::string> svector;
 
 std::string formatTable(std::vector<svector>& mcols, const FormattingStyle& options);
 std::string formatUrl(const std::string& mlink_url, const std::string& mlink_text, const FormattingStyle& options);
+UString formatUrl_U(const UString& mlink_url, const UString& mlink_text, const FormattingStyle& options);
 std::string formatList(std::vector<std::string>& mlist, const FormattingStyle& options);
 std::string formatNumberedList(std::vector<std::string>& mlist);
 
@@ -35,6 +36,7 @@ std::string date_to_string(const tm& date);
 std::string uint_to_string(unsigned int value);
 
 UString utf8_to_ustring(const std::string& src);
+std::string utf8_to_string(const char* src);
 
 std::string unichar_to_utf8(unsigned int unichar);
 
@@ -87,5 +89,7 @@ void decodeSpecialLinkBlocks(std::string& text, std::vector<Link>& links, std::o
 std::string int_to_str(int i);
 
 int str_to_int(const std::string& s);
+
+std::string& toUpper(std::string& s);
 
 #endif

@@ -38,6 +38,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <algorithm>
 #include <sstream>
 #include <time.h>
 
@@ -213,6 +214,51 @@ std::string formatUrl(const std::string& mlink_url, const std::string &mlink_tex
 	return u_url;
 }
 
+UString formatUrl_U(const UString& mlink_url, const UString &mlink_text, const FormattingStyle& options)
+{
+    UString u_url;
+    int a = options.url_style;
+    switch(a)
+    {
+        case URL_STYLE_TEXT_ONLY:
+            u_url = mlink_text;
+            break;
+        case URL_STYLE_EXTENDED:
+            if (mlink_url.length() > 0)
+            {
+                u_url += UString('<');
+                u_url += mlink_url;
+                u_url += UString('>');
+            }
+            u_url += mlink_text;
+            break;
+        case URL_STYLE_UNDERSCORED:
+            if (mlink_text.length() > 0)
+            {
+                u_url += UString('_');
+                for (size_t i = 0; i < mlink_text.length(); ++i)
+                {
+                    if (mlink_text[i] == ' ')
+                        u_url += UString('_');
+                    else
+                        u_url += UString(mlink_text[i]);
+                }
+                u_url += UString('_');
+            }
+            break;
+        default:
+            if (mlink_url.length() > 0)
+            {
+                u_url += UString('<');
+                u_url += mlink_url;
+                u_url += UString('>');
+            }
+            u_url += mlink_text;
+            break;
+    }
+    return u_url;
+}
+
 std::string formatList(std::vector<std::string>& mlist, const FormattingStyle& options)
 {
 	std::string list_out;
@@ -364,6 +410,38 @@ UString utf8_to_ustring(const std::string& src)
 	return res;
 }
 
+std::string utf8_to_string(const char* src)
+{
+    std::string res;
+    size_t len = strlen(src);
+    unsigned int code = 0;
+    memcpy(&code, src, len);
+    if (code < 0x80)
+        res.push_back(char(code));
+    else if (code < 0x0800){
+        res.push_back(char(((code >> 6) & 0x1F) | 0xC0));
+        res.push_back(char(((code >> 0) & 0x3F) | 0x80));
+    }
+    else if (code < 0x10000){
+        res.push_back(char(((code >> 12) & 0x0F) | 0xE0));
+        res.push_back(char(((code >> 6) & 0x3F) | 0x80));
+        res.push_back(char(((code >> 0) & 0x3F) | 0x80));
+    }
+    else if (code < 0x110000){
+        res.push_back(char(((code >> 18) & 0x07) | 0xF0));
+        res.push_back(char(((code >> 12) & 0x3F) | 0x80));
+        res.push_back(char(((code >> 6) & 0x3F) | 0x80));
+        res.push_back(char(((code >> 0) & 0x3F) | 0x80));
+    }
+    else{
+        res.push_back(char(0xEF));
+        res.push_back(char(0xBF));
+        res.push_back(char(0xBD));
+    }
+
+    return res;
+}
+
 /*Lets look at this data:
 0x00 to 0x7F: 0xxxxxxx (1 byte)
 0x80 to 0x7FF: 110xxxxx 10xxxxxx (2 bytes)
@@ -421,4 +499,10 @@ int str_to_int(const std::string& s)
 	int i;
 	ss >> i;
 	return i;
+}
+
+std::string& toUpper(std::string& s)
+{
+    std::transform(s.begin(), s.end(), s.begin(), ::toupper);
+    return s;
 }
