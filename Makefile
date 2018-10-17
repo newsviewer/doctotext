@@ -53,11 +53,11 @@ build: update_version version.h src doc/html
 	$(MAKE) -C 3rdparty htmlcxx
 	$(MAKE) -C 3rdparty wv2
 	$(MAKE) -C 3rdparty unzip
-	$(MAKE) -C 3rdparty aj16
-	$(MAKE) -C 3rdparty ak12
-	$(MAKE) -C 3rdparty ag15
-	$(MAKE) -C 3rdparty ac16
-	$(MAKE) -C 3rdparty ToUnicode
+#	$(MAKE) -C 3rdparty aj16
+#	$(MAKE) -C 3rdparty ak12
+#	$(MAKE) -C 3rdparty ag15
+#	$(MAKE) -C 3rdparty ac16
+#	$(MAKE) -C 3rdparty ToUnicode
 	$(MAKE) -C 3rdparty libcharsetdetect
 	$(MAKE) -C 3rdparty mimetic
 ifeq ($(WIN),1)
@@ -125,11 +125,11 @@ endif
 	cp $(foreach f,plain_text_extractor formatting_style metadata doctotext_c_api link exception attachment variant,src/${f}.h) build/
 	mkdir build/doc
 	mkdir build/resources
-	cp ./3rdparty/ac16/CMap/*  build/resources
-	cp ./3rdparty/ag15/CMap/*  build/resources
-	cp ./3rdparty/aj16/CMap/*  build/resources
-	cp ./3rdparty/ak12/CMap/*  build/resources
-	cp ./3rdparty/ToUnicode/*  build/resources
+#	cp ./3rdparty/ac16/CMap/*  build/resources
+#	cp ./3rdparty/ag15/CMap/*  build/resources
+#	cp ./3rdparty/aj16/CMap/*  build/resources
+#	cp ./3rdparty/ak12/CMap/*  build/resources
+#	cp ./3rdparty/ToUnicode/*  build/resources
 	cp ./3rdparty/pdf_font_metrics.txt build/resources
 	cp -r doc/html doc/index.html build/doc
 	cp ChangeLog VERSION build
